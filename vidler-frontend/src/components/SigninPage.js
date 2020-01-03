@@ -3,7 +3,7 @@ import React from 'react';
 import useSignin from '../hooks/useSignin';
 
 const SigninPage = () => {
-  const [handleChange, handleSubmit] = useSignin();
+  const [handleChange, handleSubmit, error] = useSignin();
 
   return (
     <div className="center">
@@ -20,8 +20,11 @@ const SigninPage = () => {
           <form className="col s6 offset-s3 auth-form z-depth-2" onSubmit={handleSubmit}>
             <div className="row">
               <div className="input-field col s12">
-                <input id="email" name="email" type="text" onChange={handleChange} />
-                <label htmlFor="email">Email</label>
+                { error.length? <div className="err-message">{ error }</div> : null}
+              </div>
+              <div className="input-field col s12">
+                <input id="usernameOrEmail" name="usernameOrEmail" type="text" onChange={handleChange} />
+                <label htmlFor="usernameOrEmail">Username / Email</label>
               </div>
               <div className="input-field col s12">
                 <input id="password" name="password" type="password" onChange={handleChange} />
