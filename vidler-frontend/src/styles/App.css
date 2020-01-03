@@ -2,6 +2,14 @@ body {
   background: #f6fbf8;
 }
 
+.navbar-container {
+  background: #4fc3f7;
+}
+
+.page-container {
+  padding: 1rem 0;
+}
+
 .auth-logo {
   width: 8rem;
   height: 8rem;
