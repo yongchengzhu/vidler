@@ -4,6 +4,22 @@ import Swal from 'sweetalert2'
 
 import auth from '../apis/auth';
 
+const swalError = (message) => {
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message
+      })
+}
+
+const swalSuccess = () => {
+    Swal.fire(
+        'Good job!',
+        'You can now signin here!',
+        'success'
+      )
+}
+
 export default () => {
     const [form, setForm] = useState({
         name:'',
@@ -16,22 +32,6 @@ export default () => {
     const handleChange =(e) => {
         setForm({...form, [e.target.name]:e.target.value});
     };
-
-    const swalError = (message) => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: message
-          })
-    }
-
-    const swalSuccess = () => {
-        Swal.fire(
-            'Good job!',
-            'You can now signin here!',
-            'success'
-          )
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
