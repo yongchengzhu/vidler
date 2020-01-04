@@ -4,20 +4,12 @@ import Swal from 'sweetalert2'
 
 import auth from '../apis/auth';
 
-const swalError = (message) => {
+const swalMessage = (icon, title, message) => {
     Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
+        icon: icon,
+        title: title,
         text: message
       })
-}
-
-const swalSuccess = () => {
-    Swal.fire(
-        'Good job!',
-        'You can now signin here!',
-        'success'
-      )
 }
 
 export default () => {
@@ -37,22 +29,22 @@ export default () => {
         e.preventDefault();
 
         if(form.password.length < 6) {
-            swalError("Password must be of length 6 or greater!")
+            swalMessage('error', 'Oops...',"Password must be of length 6 or greater!")
             return
         } else if(form.password !== form.passwordConfirm){
-            swalError("Passwords do not match, please try again!")
+            swalMessage('error', 'Oops...', "Passwords do not match, please try again!")
             return
         } else {
             try {
                 const response = await auth.post('/signup', form);
                 if(response){
-                    swalSuccess();
+                    swalMessage('success', 'Signup Complete!', 'Redirecting to login page...');
                     history.push('/signin')
                 } else {
-                    swalError(response.message)
+                    swalMessage('error', 'Oops...', response.message)
                 }
             } catch(err){
-                swalError(err.response.data.message);
+                swalMessage('error', 'Oops....', err.response.data.message);
             }
         }
     }
