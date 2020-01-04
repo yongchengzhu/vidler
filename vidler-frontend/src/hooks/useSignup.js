@@ -1,21 +1,52 @@
 import { useState } from 'react';
+import history from '../utils/history';
+import Swal from 'sweetalert2'
 
-export default initialVal => {
-    const [value, setValue] = useState(initialVal);
+import auth from '../apis/auth';
+
+const swalMessage = (icon, title, message) => {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        text: message
+      })
+}
+
+export default () => {
+    const [form, setForm] = useState({
+        name:'',
+        username: '',
+        email: '',
+        password: '',
+        passwordConfirm:''
+    });
 
     const handleChange =(e) => {
-        setValue(e.target.value);
+        setForm({...form, [e.target.name]:e.target.value});
     };
 
-    const handleSubmit = (e) => {
-        const pwd = e.target.password.value
-        const pwdConfirm = e.target.password_confirm.value
-        if(pwd !== pwdConfirm){
-            alert("Passwords must match")
-        } else {
-            alert("Passwords are good!")
-        }
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(form.password.length < 6) {
+            swalMessage('error', 'Oops...',"Password must be of length 6 or greater!")
+            return
+        } else if(form.password !== form.passwordConfirm){
+            swalMessage('error', 'Oops...', "Passwords do not match, please try again!")
+            return
+        } else {
+            try {
+                const response = await auth.post('/signup', form);
+                if(response){
+                    swalMessage('success', 'Signup Complete!', 'Redirecting to login page...');
+                    history.push('/signin')
+                } else {
+                    swalMessage('error', 'Oops...', response.message)
+                }
+            } catch(err){
+                swalMessage('error', 'Oops....', err.response.data.message);
+            }
+        }
     }
-    return [value, handleChange, handleSubmit];
+    return [handleChange, handleSubmit];
 }
