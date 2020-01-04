@@ -39,24 +39,22 @@ export default () => {
         if(form.password.length < 6) {
             swalError("Password must be of length 6 or greater!")
             return
-        }
-
-        if(form.password !== form.passwordConfirm){
+        } else if(form.password !== form.passwordConfirm){
             swalError("Passwords do not match, please try again!")
             return
-        }
-        try {
-            const response = await auth.post('/signup', form);
-            if(response){
-                swalSuccess();
-                history.push('/signin')
-            } else {
-                swalError(response.message)
+        } else {
+            try {
+                const response = await auth.post('/signup', form);
+                if(response){
+                    swalSuccess();
+                    history.push('/signin')
+                } else {
+                    swalError(response.message)
+                }
+            } catch(err){
+                swalError(err.response.data.message);
             }
-        } catch(err){
-            swalError(err.response.data.message);
         }
-        
     }
     return [handleChange, handleSubmit];
 }
