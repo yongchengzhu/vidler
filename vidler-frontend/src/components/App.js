@@ -10,6 +10,7 @@ import SignupPage from './SignupPage';
 import SignoutPage from './SignoutPage';
 
 import "../styles/App.css";
+import VideoUploadPage from './VideoUploadPage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/signup" component={SignupPage}/>
           <Route path="/signin" component={SigninPage} />
           <Route path="/signout" component={SignoutPage} />
+          <Route path="/user/upload" component={VideoUploadPage}/>
           <Route path="/" component={HomePage} />
         </Switch>
       </div>
