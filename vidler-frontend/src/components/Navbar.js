@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext';
 
 const Navbar = () => {
-  const { isAuth } = useContext(AuthContext);
+  const { isAuth, user } = useContext(AuthContext);
 
   return (
     <nav className="navbar-container">
@@ -18,7 +18,10 @@ const Navbar = () => {
                 <li><Link to="/signin">Sign In</Link></li>
               </>
             ) : (
-              <li><Link to="/signout">Sign Out</Link></li>
+              <>
+                <li><Link to="#">Hi, {user.username}</Link></li>
+                <li><Link to="/signout">Sign Out</Link></li>
+              </>
             )
           }
         </ul>
