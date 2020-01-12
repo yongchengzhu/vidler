@@ -18,7 +18,6 @@ export default () => {
 
     try {
       const response = await auth.post('/signin', form);
-      console.log(response.data);
       setIsAuth(true);
       setError("");
       localStorage.setItem('token', response.data.accessToken);

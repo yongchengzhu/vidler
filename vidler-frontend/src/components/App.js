@@ -8,11 +8,14 @@ import HomePage from './HomePage';
 import SigninPage from './SigninPage';
 import SignupPage from './SignupPage';
 import SignoutPage from './SignoutPage';
+import VideoUploadPage from './VideoUploadPage';
+import useUser from '../hooks/useUser';
 
 import "../styles/App.css";
-import VideoUploadPage from './VideoUploadPage';
 
 const App = () => {
+  useUser();
+
   return (
     <Router history={history}>
       <Navbar />
