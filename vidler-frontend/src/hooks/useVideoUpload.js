@@ -20,7 +20,7 @@ export default () => {
         console.log(formData);
 
         try{
-            const response = await auth.post('https://postman-echo.com/post', formData, {
+            const response = await auth.post('http://localhost:8080/storage/uploadFile', formData, {
                 headers: {
                     'Content-Type':'multipart/form-data'
                 }

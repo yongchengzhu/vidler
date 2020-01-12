@@ -1,5 +1,6 @@
 package com.vidler.backend.controller;
 
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.vidler.backend.model.AmazonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
