@@ -3,64 +3,76 @@ package com.vidler.backend.payload;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class VideoCreateRequest {
-    @NotBlank
-    @Size(min = 3, max = 40)
-    private String username;
+  private MultipartFile file;
 
-    @NotBlank
-    @Size(max = 40)
-    private String title;
+  @NotBlank
+  @Size(min = 3, max = 40)
+  private String username;
 
-    @NotBlank
-    @Size(max = 500)
-    private String link;
+  @NotBlank
+  @Size(max = 40)
+  private String title;
 
-    @NotBlank
-    @Size(max = 100)
-    private String description;
+  @NotBlank
+  @Size(max = 500)
+  private String link;
 
-    @NotBlank
-    @Size(max = 100)
-    private String thumbnail;
+  @NotBlank
+  @Size(max = 100)
+  private String description;
 
-    public String getUsername() {
-        return username;
-    }
+  @NotBlank
+  @Size(max = 100)
+  private String thumbnail;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public MultipartFile getFile() {
+    return file;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public void setFile(MultipartFile file) {
+    this.file = file;
+  }
 
-    public String getLink() {
-        return link;
-    }
+  public void setUsername(String username) {
+      this.username = username;
+  }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
+  public String getTitle() {
+      return title;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public void setTitle(String title) {
+      this.title = title;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public String getLink() {
+      return link;
+  }
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
+  public void setLink(String link) {
+      this.link = link;
+  }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
+  public String getDescription() {
+      return description;
+  }
+
+  public void setDescription(String description) {
+      this.description = description;
+  }
+
+  public String getThumbnail() {
+      return thumbnail;
+  }
+
+  public void setThumbnail(String thumbnail) {
+      this.thumbnail = thumbnail;
+  }
 }

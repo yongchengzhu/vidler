@@ -1,8 +1,10 @@
 import { useState, useContext } from 'react';
 import user from '../apis/user';
 import {swalMessage} from '../apis/swal'
+import AuthContext from '../contexts/AuthContext';
 
 export default () => {
+    const { user } = useContext(AuthContext);
     const [uploadedFile, setUploadedFile] = useState({});
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [form, setForm] = useState({
@@ -22,59 +24,67 @@ export default () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
+
         formData.append('file', form.file);
-        try{
-            const response = await user.post('http://localhost:8080/storage/uploadFile', formData, {
-                headers: {
-                    'Content-Type':'multipart/form-data'
-                },
-                onUploadProgress: progressEvent => {
-                    setUploadPercentage(
-                        parseInt(
-                            Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                    )
-                );
-                    //Clear percentage
-                    setTimeout(() => setUploadPercentage(0), 10000);
-                }
-            });
+        formData.append('username', user.username);
+        formData.append('link', 'placeholder');
+        formData.append('thumbnail', 'test thumbnail');
+        formData.append('view_counts', '0');
+        formData.append('title', form.title);
+        formData.append('description', form.description);
+        user.post('http://localhost:8080/video/uploadVideo', formData);
+        // try{
+        //     const response = await user.post('http://localhost:8080/storage/uploadFile', formData, {
+        //         headers: {
+        //             'Content-Type':'multipart/form-data'
+        //         },
+        //         onUploadProgress: progressEvent => {
+        //             setUploadPercentage(
+        //                 parseInt(
+        //                     Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        //             )
+        //         );
+        //             //Clear percentage
+        //             setTimeout(() => setUploadPercentage(0), 10000);
+        //         }
+        //     });
 
-            try {
-                const urlLink = response.data;
-                const videoData = {
-                    username: 'testing',
-                    title: form.title,
-                    link: urlLink,
-                    description: form.description,
-                    thumbnail: 'placeholder',
-                    view_counts: 0
-                }
-                // const response = await auth.post('/signup', form);
-                const videoResponse = await user.post('http://localhost:8080/video/uploadVideo', videoData);
-                if (videoResponse) {
-                    setUploadedFile({'url': urlLink});
-                    swalMessage('success', 'File Uploaded!', urlLink);
-                } else {
-                    swalMessage('error', 'Oops...', 'There was a problem with the server');
-                    console.log('failed here')
-                }
-                // console.log(response);
-            } catch (err) {
-                swalMessage('error', 'Oops...', err.response.data.message);
-                console.log('why i fail here')
-            }
+        //     try {
+        //         const urlLink = response.data;
+        //         const videoData = {
+        //             username: 'testing',
+        //             title: form.title,
+        //             link: urlLink,
+        //             description: form.description,
+        //             thumbnail: 'placeholder',
+        //             view_counts: 0
+        //         }
+        //         // const response = await auth.post('/signup', form);
+        //         const videoResponse = await user.post('http://localhost:8080/video/uploadVideo', videoData);
+        //         if (videoResponse) {
+        //             setUploadedFile({'url': urlLink});
+        //             swalMessage('success', 'File Uploaded!', urlLink);
+        //         } else {
+        //             swalMessage('error', 'Oops...', 'There was a problem with the server');
+        //             console.log('failed here')
+        //         }
+        //         // console.log(response);
+        //     } catch (err) {
+        //         swalMessage('error', 'Oops...', err.response.data.message);
+        //         console.log('why i fail here')
+        //     }
 
 
-        } catch(err){
-            // console.log(err);
-            if(err.response.status === 500) {
-                swalMessage('error', 'Oops...', 'There was a problem with the server');
-            } else {
-                swalMessage('error', 'Oops...', err.response.data.message);
-                console.log('mega fail here')
-            }
+        // } catch(err){
+        //     // console.log(err);
+        //     if(err.response.status === 500) {
+        //         swalMessage('error', 'Oops...', 'There was a problem with the server');
+        //     } else {
+        //         swalMessage('error', 'Oops...', err.response.data.message);
+        //         console.log('mega fail here')
+        //     }
 
-        }
+        // }
     }
     return [handleChange, onSubmit, uploadPercentage];
 }
