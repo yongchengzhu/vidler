@@ -1,16 +1,8 @@
 import { useState } from 'react';
 import history from '../utils/history';
-import Swal from 'sweetalert2'
 
+import {swalMessage} from '../apis/swal'
 import auth from '../apis/auth';
-
-const swalMessage = (icon, title, message) => {
-    Swal.fire({
-        icon: icon,
-        title: title,
-        text: message
-      })
-}
 
 export default () => {
     const [form, setForm] = useState({
